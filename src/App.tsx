@@ -46,5 +46,39 @@ const StyledApp = styled.div`
   }
 
   .content-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 1em;
+    grid-row-gap: 1em;
+
+    .goal {
+      grid-column: 1 / 4;
+    }
+
+    .amount-input {
+      grid-column: 1 / 4;
+    }
+
+    .date-input {
+      grid-column: 1 / 4;
+    }
+
+    .monthly-amount {
+      grid-column: 1 / 4;
+    }
+
+    .button {
+      grid-column: 1 / 4;
+    }
+
+    @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+      .amount-input {
+        grid-column: 1 / 3;
+      }
+
+      .date-input {
+        grid-column: 3 / 4;
+      }
+    }
   }
 `;

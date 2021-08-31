@@ -1,6 +1,6 @@
 export function MonthlyAmount(): JSX.Element {
   return (
-    <div>
+    <div className="monthly-amount">
       <div>Monthly amount</div>
       <div>$521</div>
       <div>

@@ -1,3 +1,3 @@
 export function Button(): JSX.Element {
-  return <button>Confirm</button>;
+  return <button className="button">Confirm</button>;
 }

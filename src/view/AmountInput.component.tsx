@@ -1,3 +1,3 @@
 export function AmountInput(): JSX.Element {
-  return <input type="text" placeholder="Amount" />;
+  return <input className="amount-input" type="text" placeholder="Amount" />;
 }

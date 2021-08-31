@@ -4,9 +4,9 @@ import { BREAKPOINTS, COLORS } from '../constants';
 
 export function Goal(): JSX.Element {
   return (
-    <StyledGoal>
+    <StyledGoal className="goal">
       <img src={buyAHouse} alt="" />
-      <div className="goal">
+      <div className="goal-description">
         <div className="goal-name">Buy a house</div>
         <div className="goal-subtitle">Saving goal</div>
       </div>
@@ -18,7 +18,7 @@ export function Goal(): JSX.Element {
 const StyledGoal = styled.div`
   display: flex;
 
-  .goal {
+  .goal-description {
     display: flex;
     flex-direction: column;
     justify-content: center;
