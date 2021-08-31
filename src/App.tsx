@@ -41,43 +41,27 @@ const StyledApp = styled.div`
   min-height: 100vh;
   font-family: 'Work Sans', sans-serif;
 
-  @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
-    font-size: 24px;
-  }
-
   .content-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     grid-column-gap: 1em;
     grid-row-gap: 1em;
 
-    .goal {
-      grid-column: 1 / 4;
-    }
-
-    .amount-input {
-      grid-column: 1 / 4;
-    }
-
-    .date-input {
-      grid-column: 1 / 4;
-    }
-
-    .monthly-amount {
-      grid-column: 1 / 4;
-    }
-
+    .goal,
+    .amount-input,
+    .date-input,
+    .monthly-amount,
     .button {
-      grid-column: 1 / 4;
+      grid-column: 1 / 8;
     }
 
     @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
       .amount-input {
-        grid-column: 1 / 3;
+        grid-column: 1 / 5;
       }
 
       .date-input {
-        grid-column: 3 / 4;
+        grid-column: 5 / 8;
       }
     }
   }

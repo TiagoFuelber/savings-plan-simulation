@@ -24,12 +24,7 @@ const StyledGoal = styled.div`
     justify-content: center;
     margin-left: 1em;
 
-    &-name,
-    &-subtitle {
-      font-style: normal;
-    }
-
-    &-name {
+    .goal-name {
       font-size: 1.25em;
       color: ${COLORS.blueGray900};
       font-family: Rubik;
@@ -41,7 +36,7 @@ const StyledGoal = styled.div`
       }
     }
 
-    &-subtitle {
+    .goal-subtitle {
       font-family: Work Sans;
       color: ${COLORS.blueGray400};
       font-weight: normal;
