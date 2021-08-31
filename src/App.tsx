@@ -10,6 +10,7 @@ import { Goal } from './view/Goal.component';
 import { Header } from './view/Header.component';
 import { MonthlyAmount } from './view/MonthlyAmount.component';
 import { Title } from './view/Title.component';
+import { BREAKPOINTS, COLORS } from './constants';
 
 export function App(): JSX.Element {
   return (
@@ -34,8 +35,13 @@ export function App(): JSX.Element {
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const StyledApp = styled.div`
-  background: grey;
+  font-size: 16px;
+  background: ${COLORS.blueGray10};
   box-sizing: border-box;
   min-height: 100vh;
   font-family: 'Work Sans', sans-serif;
+
+  @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+    font-size: 24px;
+  }
 `;
