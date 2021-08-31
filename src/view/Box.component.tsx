@@ -2,10 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { BREAKPOINTS } from '../constants';
 
-type ElemProps = { children: React.ReactNode };
+type ElemProps = { children: React.ReactNode; className: string };
 
-export function Box({ children }: ElemProps): JSX.Element {
-  return <StyledBox>{children}</StyledBox>;
+export function Box({ children, className }: ElemProps): JSX.Element {
+  return <StyledBox {...{ className }}>{children}</StyledBox>;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

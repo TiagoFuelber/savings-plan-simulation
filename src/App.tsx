@@ -20,7 +20,7 @@ export function App(): JSX.Element {
         <Header />
         <Container>
           <Title />
-          <Box>
+          <Box className="content-container">
             <Goal />
             <AmountInput />
             <DateInput />
@@ -43,5 +43,8 @@ const StyledApp = styled.div`
 
   @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
     font-size: 24px;
+  }
+
+  .content-container {
   }
 `;
