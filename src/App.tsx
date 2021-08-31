@@ -64,5 +64,13 @@ const StyledApp = styled.div`
         grid-column: 5 / 8;
       }
     }
+
+    .monthly-amount {
+      margin-top: 0.75em;
+    }
+
+    .button {
+      margin-top: 1em;
+    }
   }
 `;

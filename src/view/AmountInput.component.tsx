@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '../constants';
+import { BREAKPOINTS, COLORS } from '../constants';
 import dollarSign from '../assets/icons/dollar.svg';
 
 export function AmountInput(): JSX.Element {
@@ -43,7 +43,7 @@ const StyledAmountInput = styled.div`
       font-family: Rubik;
       font-style: normal;
       font-weight: 500;
-      font-size: 1.5em;
+      font-size: 1.25em;
       line-height: 120%;
 
       -webkit-appearance: none;
@@ -56,6 +56,10 @@ const StyledAmountInput = styled.div`
       padding-left: 42px;
       margin-top: 0.3em;
       width: 100%;
+
+      @media screen and (min-width: ${BREAKPOINTS.desktop}px) {
+        font-size: 1.5em;
+      }
     }
   }
 `;
