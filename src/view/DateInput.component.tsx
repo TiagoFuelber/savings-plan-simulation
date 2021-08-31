@@ -93,6 +93,7 @@ const StyledDateInput = styled.div`
         border: none;
         -webkit-appearance: none;
         outline: none;
+        cursor: pointer;
       }
     }
   }

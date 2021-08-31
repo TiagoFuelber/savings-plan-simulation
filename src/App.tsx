@@ -40,6 +40,7 @@ const StyledApp = styled.div`
   box-sizing: border-box;
   min-height: 100vh;
   font-family: 'Work Sans', sans-serif;
+  padding-bottom: 4em;
 
   .content-container {
     display: grid;
