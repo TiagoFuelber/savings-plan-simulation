@@ -4,6 +4,7 @@ import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 import { COLORS } from '../constants';
 import arrowLeft from '../assets/icons/arrow-left.svg';
 import arrowRight from '../assets/icons/arrow-right.svg';
+import { useEffect, useState } from 'react';
 
 interface Props {
   value: Date;
@@ -11,39 +12,70 @@ interface Props {
 }
 
 export function DateInput({ value, onChange }: Props): JSX.Element {
+  const [hasFocus, setHasFocus] = useState(false);
+
   const increaseMonth = () => {
     onChange(addMonths(value, 1));
   };
 
   const decreaseMonth = () => {
-    onChange(addMonths(value, -1));
+    allowDecrease && onChange(addMonths(value, -1));
   };
 
   const isFutureMonth = differenceInCalendarMonths(value, new Date()) > 0;
   const isNextMonth = differenceInCalendarMonths(value, new Date()) === 1;
   const allowDecrease = isFutureMonth && !isNextMonth;
 
+  useEffect(() => {
+    const handleKeyDown = (e: { key: string }) => {
+      if (e.key === 'ArrowLeft') {
+        decreaseMonth();
+      } else if (e.key === 'ArrowRight') {
+        increaseMonth();
+      }
+    };
+
+    if (hasFocus) {
+      document.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [hasFocus]);
+
   return (
     <StyledDateInput className="date-input">
-      <label className="input-label" htmlFor="date">
+      <label
+        className="input-label"
+        htmlFor="date"
+        onFocus={() => {
+          setHasFocus(true);
+        }}
+        onBlur={() => {
+          setHasFocus(false);
+        }}
+      >
         Reach goal by
-        <div className="input-container">
+        <div className={`input-container ${hasFocus ? 'focus' : ''}`}>
           <div className="date-input">
             <button
               data-testid="decrease-date-input"
               className={`control decrease ${allowDecrease ? '' : 'disabled'}`}
-              onClick={allowDecrease ? decreaseMonth : () => null}
+              onClick={decreaseMonth}
             >
               <img src={arrowLeft} alt="" />
             </button>
-            <div className="date">
+            <button className="date">
               <div className="month">
                 {value.toLocaleString('default', { month: 'long' })}
               </div>
               <div className="year">
                 {value.toLocaleString('default', { year: 'numeric' })}
               </div>
-            </div>
+            </button>
             <button
               className="control increase"
               onClick={increaseMonth}
@@ -59,12 +91,16 @@ export function DateInput({ value, onChange }: Props): JSX.Element {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const StyledDateInput = styled.div`
+const StyledDateInput = styled.label`
   width: 100%;
 
   .input-container {
     position: relative;
     width: 100%;
+
+    &.focus .date-input {
+      border-color: ${COLORS.brandColorPrimary};
+    }
 
     .input-label {
       color: ${COLORS.blueGray900};
@@ -110,8 +146,11 @@ const StyledDateInput = styled.div`
         text-align: center;
         color: ${COLORS.blueGray900};
 
-        .month {
-        }
+        background: none;
+        border: none;
+        -webkit-appearance: none;
+        outline: none;
+        cursor: pointer;
 
         .year {
           color: ${COLORS.blueGray400};
