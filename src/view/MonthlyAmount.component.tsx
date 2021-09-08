@@ -1,16 +1,50 @@
 import styled from 'styled-components';
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
+import getMonthlyAmount from '../application/getMonthlyAmount';
 import { BREAKPOINTS, COLORS } from '../constants';
 
-export function MonthlyAmount(): JSX.Element {
+interface Props {
+  totalAmount: string;
+  reachDate: Date;
+}
+
+export function MonthlyAmount({ totalAmount, reachDate }: Props): JSX.Element {
+  const totalMonths = differenceInCalendarMonths(reachDate, new Date());
+  const totalAmountNumber = parseFloat(totalAmount.replace(/,/g, ''));
+  const formattedTotalAmount = (
+    isNaN(totalAmountNumber) ? 0 : totalAmountNumber
+  ).toLocaleString('en-us', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  const formattedMonthlyAmount = getMonthlyAmount(
+    totalAmountNumber,
+    totalMonths
+  ).toLocaleString('en-us', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
   return (
     <StyledMothlyAmount className="monthly-amount">
       <div className="result">
         <div className="label">Monthly amount</div>
-        <div className="amount">$521</div>
+        <div className="amount" data-testid="monthly-amount">
+          {formattedMonthlyAmount}
+        </div>
       </div>
       <div className="description">
-        You’re planning <strong>48 monthly deposits</strong> to reach your
-        <strong>$25,000</strong> goal by <strong>October 2020</strong>.
+        You’re planning{' '}
+        <strong data-testid="monthly-deposits">
+          {totalMonths} monthly deposits
+        </strong>{' '}
+        to reach your <strong>{formattedTotalAmount}</strong> goal by{' '}
+        <strong>
+          {reachDate.toLocaleString('default', { month: 'long' })}{' '}
+          {reachDate.toLocaleString('default', { year: 'numeric' })}
+        </strong>
+        .
       </div>
     </StyledMothlyAmount>
   );

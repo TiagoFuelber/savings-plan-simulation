@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Reset } from 'styled-reset';
+import addMonths from 'date-fns/addMonths';
 import { AmountInput } from './view/AmountInput.component';
 import { Box } from './view/Box.component';
 import { Button } from './view/Button.component';
@@ -13,6 +14,13 @@ import { Title } from './view/Title.component';
 import { BREAKPOINTS, COLORS } from './constants';
 
 export function App(): JSX.Element {
+  const [totalAmount, setTotalAmount] = useState('');
+  const [reachDate, setReachDate] = useState(addMonths(new Date(), 1));
+
+  const onChangeTotalAmount = (value: string) => {
+    setTotalAmount(value);
+  };
+
   return (
     <>
       <Reset />
@@ -22,9 +30,9 @@ export function App(): JSX.Element {
           <Title />
           <Box className="content-container">
             <Goal />
-            <AmountInput />
-            <DateInput />
-            <MonthlyAmount />
+            <AmountInput value={totalAmount} onChange={onChangeTotalAmount} />
+            <DateInput value={reachDate} onChange={setReachDate} />
+            <MonthlyAmount {...{ totalAmount, reachDate }} />
             <Button />
           </Box>
         </Container>

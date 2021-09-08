@@ -1,15 +1,48 @@
 import styled from 'styled-components';
+import MaskedInput from 'react-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { BREAKPOINTS, COLORS } from '../constants';
 import dollarSign from '../assets/icons/dollar.svg';
 
-export function AmountInput(): JSX.Element {
+const currencyMask = createNumberMask({
+  prefix: '',
+  suffix: '',
+  includeThousandsSeparator: true,
+  thousandsSeparatorSymbol: ',',
+  allowDecimal: true,
+  decimalSymbol: '.',
+  decimalLimit: 2,
+  integerLimit: 9,
+  allowNegative: false,
+  allowLeadingZeroes: false,
+});
+
+interface Props {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export function AmountInput({ value, onChange }: Props): JSX.Element {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onChange(event.target.value);
+  };
+
   return (
     <StyledAmountInput className="amount-input">
       <label className="input-label" htmlFor="amount">
         Total amount
         <div className="input-container">
           <img className="dollar-icon" src={dollarSign} alt="" />
-          <input id="amount" className="amount-input" type="tel" />
+          <MaskedInput
+            id="amount"
+            className="amount-input"
+            data-testid="amount-input"
+            type="tel"
+            value={value}
+            placeholder="0"
+            onChange={onChangeInput}
+            mask={currencyMask}
+          />
         </div>
       </label>
     </StyledAmountInput>
@@ -35,7 +68,7 @@ const StyledAmountInput = styled.div`
       position: absolute;
       left: 14px;
       top: 50%;
-      transform: translateY(-35%);
+      transform: translateY(-40%);
     }
 
     .amount-input {

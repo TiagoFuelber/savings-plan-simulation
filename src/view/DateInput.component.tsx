@@ -1,23 +1,54 @@
 import styled from 'styled-components';
+import addMonths from 'date-fns/addMonths';
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 import { COLORS } from '../constants';
 import arrowLeft from '../assets/icons/arrow-left.svg';
 import arrowRight from '../assets/icons/arrow-right.svg';
 
-export function DateInput(): JSX.Element {
+interface Props {
+  value: Date;
+  onChange: (value: Date) => void;
+}
+
+export function DateInput({ value, onChange }: Props): JSX.Element {
+  const increaseMonth = () => {
+    onChange(addMonths(value, 1));
+  };
+
+  const decreaseMonth = () => {
+    onChange(addMonths(value, -1));
+  };
+
+  const isFutureMonth = differenceInCalendarMonths(value, new Date()) > 0;
+  const isNextMonth = differenceInCalendarMonths(value, new Date()) === 1;
+  const allowDecrease = isFutureMonth && !isNextMonth;
+
   return (
     <StyledDateInput className="date-input">
       <label className="input-label" htmlFor="date">
         Reach goal by
         <div className="input-container">
           <div className="date-input">
-            <button className="control decrease">
+            <button
+              data-testid="decrease-date-input"
+              className={`control decrease ${allowDecrease ? '' : 'disabled'}`}
+              onClick={allowDecrease ? decreaseMonth : () => null}
+            >
               <img src={arrowLeft} alt="" />
             </button>
             <div className="date">
-              <div className="month">October</div>
-              <div className="year">2021</div>
+              <div className="month">
+                {value.toLocaleString('default', { month: 'long' })}
+              </div>
+              <div className="year">
+                {value.toLocaleString('default', { year: 'numeric' })}
+              </div>
             </div>
-            <button className="control increase">
+            <button
+              className="control increase"
+              onClick={increaseMonth}
+              data-testid="increase-date-input"
+            >
               <img src={arrowRight} alt="" />
             </button>
           </div>
@@ -94,6 +125,11 @@ const StyledDateInput = styled.div`
         -webkit-appearance: none;
         outline: none;
         cursor: pointer;
+
+        &.disabled {
+          cursor: not-allowed;
+          opacity: 0.5;
+        }
       }
     }
   }
